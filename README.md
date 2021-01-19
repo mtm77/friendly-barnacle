@@ -1,2 +1,3 @@
 # friendly-barnacle
-Hello!
+
+What a friendly barnacle!
