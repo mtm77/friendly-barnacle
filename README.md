@@ -1,5 +1,3 @@
 # friendly-barnacle
 
-What a friendly barnacle!
-
-aAGGGHGHHHHGH
+What a friendly barnacle! 123
