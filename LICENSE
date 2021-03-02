@@ -1,6 +1,6 @@
 # Delectat addidit
 
-## Taurum lambendo
+## Taurum lambendoa
 
 Lorem markdownum deceperit urbes ademptis dumque petunt sub figura pariter
 properata ales videat iuvabat, nullum tamen cogit, proles. Titulum haec adeunda
