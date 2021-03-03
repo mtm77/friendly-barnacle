@@ -1,3 +1,3 @@
 Just testing out this file creation.
 
-How about another paragraph? asdf
+How about another paragraph?
