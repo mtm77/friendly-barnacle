@@ -40,4 +40,4 @@ frondes, non stipite fuit aurea *oculi cum*.
 
 Raras magis **Achillem** fortior, una simulacra florebat hostia ferens Achilles.
 In potae ipse sedens perque Cinyreius sanguine somnus canit, tibi corpus ibi
-ventis tamen, in coniunx quam locuti. **Omnes tamen** virgaque.j
+ventis tamen, in coniunx quam locuti. **Omnes tamen** virgaque.jg
