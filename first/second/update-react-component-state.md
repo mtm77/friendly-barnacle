@@ -1,4 +1,4 @@
-# Delectat addidita
+# Delectat addidit
 
 ## Taurum lambendo
 
