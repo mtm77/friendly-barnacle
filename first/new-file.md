@@ -1,1 +1,1 @@
-new file!
+Lorem ipsum dolor sit amet.
