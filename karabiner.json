@@ -1,3 +1,6 @@
+// Caps Lock is Fn
+// Insert is `
+
 {
   "title": "Fn + WASD media controls",
   "rules": [
