@@ -1,0 +1,65 @@
+{
+  "title": "Fn + WASD media controls",
+  "rules": [
+    {
+      "description": "Fn + W increases volume",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "modifiers": { "mandatory": ["fn"] }, "key_code": "w" },
+          "to": [{ "repeat": true, "key_code": "volume_increment" }]
+        }
+      ]
+    },
+    {
+      "description": "Fn + S decreases volume",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "modifiers": { "mandatory": ["fn"] }, "key_code": "s" },
+          "to": [{ "repeat": true, "key_code": "volume_decrement" }]
+        }
+      ]
+    },
+    {
+      "description": "Fn + A plays previous song",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "modifiers": { "mandatory": ["fn"] }, "key_code": "a" },
+          "to": [{ "repeat": true, "key_code": "rewind" }]
+        }
+      ]
+    },
+    {
+      "description": "Fn + D plays next song",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "modifiers": { "mandatory": ["fn"] }, "key_code": "d" },
+          "to": [{ "repeat": true, "key_code": "fastforward" }]
+        }
+      ]
+    },
+    {
+      "description": "Fn + E mutes song",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "modifiers": { "mandatory": ["fn"] }, "key_code": "e" },
+          "to": [{ "repeat": true, "key_code": "mute" }]
+        }
+      ]
+    },
+    {
+      "description": "Fn + Q plays/pauses media",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "modifiers": { "mandatory": ["fn"] }, "key_code": "q" },
+          "to": [{ "repeat": true, "key_code": "play_or_pause" }]
+        }
+      ]
+    }
+  ]
+}
