@@ -1,1 +1,1 @@
-new-file-five!x
+Hey there! This is a new file.
