@@ -1,7 +1,7 @@
 ---
 title: Entrepreneurship for INTJs
 description: As an introverted entrepreneur, you're better off than you think.
-date: 2017-12-18
+date: 2017-12-16
 type: article
 featured: true
 ---
