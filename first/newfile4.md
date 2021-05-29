@@ -5,7 +5,7 @@ date: 2017-12-16
 type: article
 featured: true
 ---
-z
+
 The majority of entrepreneurial advice is centered around extroversion. Our main channels of education – podcasts, social media, interviews, and so on – promote the message that only an outgoing “people person” can be successful at entrepreneurship.
 
 Alright then!
