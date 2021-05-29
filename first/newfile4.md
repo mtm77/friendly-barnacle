@@ -251,7 +251,7 @@ If you’re focusing on automating most of your business with technology, you ma
 
 I still recommend hiring professionals to handle specific business endeavors – for instance, hire an accountant to handle your taxes. Delegation can be uncomfortable at first, but it relieves a great deal of stress.
 
-If you need to hire people to scale your business, trust your intuition during the hiring process, and make sure you understand their personal needs and wants: are they motivated by recognition? Money? How do they communicate best? At that point, your job adds an important new responsibility: making sure your employees have everything they need to do their job. Listening to their concerns. Being the lubricant in the machine.
+If you need to hire people to scale your business, trust your intuition during the hiring process, and make sure you understand their personal needs and wants: are they motivated by recognition? Money? How do they communicate best? At that point, your job adds an important new responsibility: making sure your employees have everything they need to do their job. Listening to their concerns. Being the lubricant in the machine.f
 
 When assigning tasks to employees, focus on _why_ rather than _what_. “I would like you to do X _because Y_” gives them a metric on which to base their decisions, and this can help them gain perspective and perform their job with less contact from you.
 
