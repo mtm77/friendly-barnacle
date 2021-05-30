@@ -8,8 +8,6 @@ featured: true
 
 The majority of entrepreneurial advice is centered around extroversion. Our main channels of education – podcasts, social media, interviews, and so on – promote the message that only an outgoing “people person” can be successful at entrepreneurship.
 
-Alright then!
-
 But some of us aren’t like that. We don’t want to be networking – we’d rather be working on our projects and pushing ourselves to learn more.
 
 And that’s okay.
