@@ -109,11 +109,11 @@ Rating: 8/10
 
 Really solid headphones. I've had them for years. I needed to get new ear cups and a band to cover the top because they were falling apart, but the sound is really good and they're comfortable, even after wearing them for hours.
 
-## Poang w/ Blanket
+## Poang w/ Ylvali blanket
 
 Rating: 6/10
 
-Love the look, but for some reason, mine feels really stiff. It's not as comfortable as the one at the Ikea store. Maybe it needs broken in?
+Love the look, but for some reason, mine feels really stiff compared to the one at the store (and the others I've sat in). I'm not sure if it needs broken in, or if they've updated the design to be a little more upright.
 
 The headrest sits too far forward and makes my neck hurt, but if I take it off, it's pretty nice (although it looks ridiculous like this):
 
@@ -121,7 +121,7 @@ The headrest sits too far forward and makes my neck hurt, but if I take it off, 
 
 > I'll probably end up modding it to take off the headrest entirely.
 
-There are lots of pretty colors!
+Once the headrest is off, this thing is super comfortable, and I love the look! There are lots of pretty Poangs to choose from, and they hold up nicely.
 
 ## Herman Miller Aeron
 
