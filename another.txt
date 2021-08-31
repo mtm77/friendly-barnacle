@@ -1,1 +1,677 @@
-This is another test of another.txt.
+---
+title: "Things written in React vs. Svelte"
+---
+
+I'm really impressed by how much simpler code is in Svelte than React.
+
+**Note:** There are shorter ways to write some of these examples, but I'm trying to keep them readable. My goal here isn't to play code golf, but to try to explain the differences between React and Svelte's syntax as clearly as possible.
+
+## Consuming props
+
+Let's start with a basic one. If you want to accept props in a React component, you pass them as an object into a function:
+
+```jsx
+function Example({ foo }) {
+  return <div>{foo}</div>
+}
+```
+
+In Svelte, you use `export` from a component to denote a prop:
+
+```html
+<script>
+  export let foo
+</script>
+
+<div>{foo}</div>
+```
+
+## Assigning props
+
+Passing props with the same name as a variable:
+
+```jsx
+// React
+<Example foo={foo} bar={bar} baz={baz} />
+```
+
+```html
+<!-- Svelte -->
+<Example {foo} {bar} {baz} />
+```
+
+## Handling input changes
+
+In React, you can work with a controlled input like this:
+
+```jsx
+import { useState } from 'react'
+
+function Example() {
+  const [value, setValue] = useState("")
+
+  return <input value={value} onChange={e => setValue(e.target.value)} />
+}
+```
+
+In Svelte, you can use `bind:` as a shorthand:
+
+```html
+<script>
+  let value = ""
+</script>
+
+<input bind:value />
+```
+
+## Applying classes
+
+If you want to apply a class based on some condition:
+
+```jsx
+<div className={someCondition ? "active" : ""}>
+```
+
+In Svelte, this applies an `.active` class if `someCondition` is true:
+
+```html
+<div class:active={someCondition}>
+```
+
+This gets even shorter if you want to add the `active` class based on a variable called `active`:
+
+```html
+<div class:active>
+```
+
+Applying multiple classes based on a condition:
+
+```jsx
+export default function Example({ active }) {
+  const classes = `p-4 bg-red rounded-lg ${active ? 'active' : ''}`
+
+  return <div classNames={classes}></div>
+}
+```
+
+And in Svelte:
+
+```html
+<script>
+  export let active
+</script>
+
+<div class="p-4 bg-red rounded-lg" class:active></div>
+```
+
+If you want to pass in additional classes as props:
+
+```jsx
+function Example({ classes = "" }) {
+  return <div className={`p-4 bg-red rounded-lg ${classes}`}></div>
+}
+```
+
+```html
+<script>
+  export let classes = ""
+</script>
+
+<div class="p-4 bg-red rounded-lg {classes}"></div>
+```
+
+## Effects
+
+Here's an example of what it would look like to update the page title (the text that appears on the tab) every time a button is clicked:
+
+```jsx
+import { useState, useEffect } from 'react'
+
+function Example() {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    document.title = `Clicked ${count} times`
+  }, [count])
+
+  function add() {
+    setCount(prev => prev + 1)
+  }
+
+  return <button onClick={add}>{count}</button>
+}
+```
+
+Instead of `useEffect`, Svelte uses `$` to denote reactive statements. Values which directly appear within the `$:` block become the dependencies (in this case, `count`):
+
+```html
+<script>
+  let count = 0
+
+  $: document.title = count
+
+  function add () {
+    count = count + 1
+  }
+</script>
+
+<button on:click={add}>{count}</button>
+```
+
+## Managing the `<head>`
+
+Speaking of the page title, there are also ways to modify the page's `<head>`. In React, you can do this with something like [helmet](https://www.npmjs.com/package/react-helmet):
+
+```jsx
+import React from 'react'
+import { Helmet } from 'react-helmet'
+
+export default function Example() {
+  return (
+    <div>
+      <Helmet>
+        <title>My Title</title>
+      </Helmet>
+
+      ...
+    </div>
+  )
+}
+```
+
+In Svelte, you can manage the head through `<svelte:head>`:
+
+```html
+<svelte:head>
+  <title>My Title</title>
+</svelte:head>
+
+<div>...</div>
+```
+
+
+
+Stores aren't provided natively by React, but you can use a package like [Zustand](https://github.com/pmndrs/zustand) to implement them. This is a bit of a contrived example, but if you wanted to have a store to control a lightswitch:
+
+```js
+// lights.js
+import create from 'zustand'
+
+export const useLights = create(set => ({
+  lightsOn: true,
+  update: value => set(value)
+}))
+```
+
+```jsx
+import { useLights } from './lights'
+
+export default function LightSwitch() {
+  const { lightsOn, update } = useLights(state => ({
+    lightsOn: state.lightsOn,
+    update: state.update,
+  }))
+
+  function toggle() {
+    update({ lightsOn: !lightsOn })
+  }
+
+  return (
+    <button onClick={toggle}>
+      The lights are {$lightsOn ? "on" : "off"}.
+    </button>
+  )
+}
+```
+
+In Svelte, stores are built in. You can create one in two lines and reference its values by prefixing a `$`:
+
+```js
+// lights.js
+import { writable } from 'svelte/store'
+
+export const lightsOn = writable(true)
+```
+
+```html
+<!-- LightSwitch.svelte -->
+<script>
+  import { lightsOn } from './lights'
+
+  function toggle() {
+    $lightsOn = !$lightsOn
+  }
+</script>
+
+<button on:click={toggle}>
+  The lights are {$lightsOn ? "on" : "off"}.
+</button>
+```
+
+## CSS
+
+In React, you can't locally scope CSS without a third-party package like CSS Modules:
+
+```jsx
+// Example.js
+import styles from './Example.css'
+
+function Example() {
+  return (
+    <button className={styles.button}>Click me!</button>
+  )
+}
+```
+
+```css
+/* Example.css */
+.button {
+  background: red;
+}
+```
+
+In Svelte, styles are locally scoped to the files they're in. What's more, they're not only scoped to classes, but also _tags_, so you don't even need to apply a class!
+
+```html
+<button>Click me!</button>
+
+<style>
+  button {
+    background: red;
+  }
+</style>
+```
+
+## Referencing a component
+
+In React, if you want to get the height of a component, you can use a `ref`:
+
+```jsx
+import { useRef } from 'react'
+
+export default function Example () {
+  const div = useRef()
+
+  console.log(div.current.offsetHeight) // TODO ???
+
+  return <div ref={div}>Hello!</div>
+}
+```
+
+In Svelte, you can `bind:this`:
+
+```html
+<script>
+  let div
+
+  console.log(div.offsetHeight)
+</script>
+
+<div bind:this={div}>Hello!</div>
+```
+
+`bind:this`
+
+## Event listeners
+
+In React, you can add event listeners inside of a `useEffect`:
+
+```js
+function Example() {
+  useEffect(() => {
+    function logClick() {
+      console.log("Clicked!")
+    }
+
+    window.addEventListener("mousedown", logClick)
+
+    return window.removeEventListener("mousedown", logClick)
+  }, [])
+
+  // ...
+}
+```
+
+In Svelte, `svelte:window` will automatically take care of cleaning these up for you:
+
+```html
+<script>
+  function logClick() {
+    console.log("Clicked!")
+  }
+</script>
+
+<svelte:window on:mousedown={logClick} />
+
+<!-- ... -->
+```
+
+## Debouncing inputs
+
+Debouncing a search input in React, so 500ms after the user stops typing, we search for what they typed:
+
+```js
+function useDebounce(value, duration) {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+  
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), duration)
+
+    return () => clearTimeout(handler)
+  }, [value, duration])
+
+  return debouncedValue
+}
+```
+
+```jsx
+function Example() {
+  const [value, setValue] = useState("")
+  const debouncedValue = useDebounce(value, 500);
+
+  useEffect(() => {
+    const searchResults = fetch(`/search?q=${debouncedValue}`)
+  },
+  [debouncedValue])
+
+  return <input value={value} onChange={e => setValue(e.target.value)} />
+}
+```
+
+In Svelte, we could implement a "use directive" to create a reusable input debouncer. A use directive runs a function when a component is mounted and it can optionally return an `update` and `destroy` function. You can apply them to a component like this: `<input use:debounce>`. So let's define the debounce function and then add it to our search input:
+
+```js
+// debounce.js
+export default function debounce(node, { value, func, duration }) {
+  let timer
+
+  return {
+    update() {
+      clearTimeout(timer)
+      timer = setTimeout(func, duration)
+    },
+    destroy() {
+      clearTimeout(timer)
+    }
+  }
+}
+```
+
+```html
+<script>
+  import debounce from './debounce'
+
+  let value
+
+  function search () {
+    const searchResults = fetch(`/search?q=${value}`)
+  }
+</script>
+
+<input bind:value use:debounce={{ value, func: search, duration: 500 }} />
+```
+
+## Children
+
+```jsx
+export default function Example({ children }) {
+  return <div>{children}</div>
+}
+```
+
+```html
+<div>
+  <slot />
+</div>
+```
+
+## Conditionals
+
+I think React is better at conditionals.
+
+```jsx
+import Foo from './Foo'
+
+function Example({ showFoo }) {
+  return (
+    <div>
+      {showFoo && <Foo />}
+    </div>
+  )
+}
+```
+
+Svelte uses its own `{#if}`/`{:else}`/`{/if}` syntax:
+
+```html
+<script>
+  import Foo from './Foo.svelte'
+
+  export let foo
+</script>
+
+<div>
+  {#if showFoo}
+    <Foo />
+  {/if}
+</div>
+```
+
+## Iteration
+
+```jsx
+export default function Example () {
+  const characters = ["Joker", "Mona", "Skull", "Panther"]
+
+  return (
+    <ul>
+      {characters.map(character => (
+        <li>{character}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+```html
+<script>
+  const characters = ["Joker", "Mona", "Skull", "Panther"]
+</script>
+
+<ul>
+  {#each characters as character}
+    <li>{character}</li>
+  {/each}
+</ul>
+```
+
+And with indexes:
+
+```jsx
+export default function Example () {
+  const characters = ["Joker", "Mona", "Skull", "Panther"]
+
+  return (
+    <ul>
+      {characters.map((character, i) => (
+        <li>{character} ({i})</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+```html
+<script>
+  const characters = ["Joker", "Mona", "Skull", "Panther"]
+</script>
+
+<ul>
+  {#each characters as character, i}
+    <li>{character} ({i})</li>
+  {/each}
+</ul>
+```
+
+## Setting HTML
+
+```jsx
+export default function Example({ content }) {
+  return <div dangerouslySetInnerHTML={{ __html: content }} />
+}
+```
+
+```html
+<script>
+  export let content
+</script>
+
+<div>{@html content}</div>
+```
+
+## Form handling
+
+If you don't want a form to reload the page on submit, you can use `e.preventDefault`. In React, you need to add this to your form handler function:
+
+```jsx
+export default function Example () {
+  function handleSubmit (e) {
+    e.preventDefault()
+    // ...
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      ...
+    </form>
+  )
+}
+```
+
+In Svelte, you can do this inline with a `|`:
+
+```html
+<script>
+  function handleSubmit () {
+    // ...
+  }
+</script>
+
+<form on:submit|preventDefault={handleSubmit}>
+  ...
+</form>
+```
+
+You can also do this with `stopPropagation` (to prevent the event from bubbling to the next element), `once` (to remove the handler after the first time it runs), and [several others](https://svelte.dev/docs#Element_directives).
+
+## Mounting components
+
+In React, you can run code directly after a component has been mounted with `useEffect`:
+
+```jsx
+import { useEffect } from 'react'
+
+export default function Example () {
+  useEffect(() => {
+    console.log("The component has been mounted!")
+  }, [])
+
+  // ...
+}
+```
+
+In Svelte, you can use `onMount`:
+
+```html
+<script>
+  import { onMount } from 'svelte'
+
+  onMount(() => {
+    console.log("The component has been mounted!")
+  })
+</script>
+
+<!-- ... -->
+```
+
+Svelte also has `beforeUpdate`, `afterUpdate`, and `onDestroy` (which runs immediately before the component is unmounted).
+
+### Loading data
+
+In React, you'll need to manage retrieving data, loading states, and errors on your own. I know there are prettier ways to do it (like with a reducer and object) but I'm going to keep it very simple for this example:
+
+```jsx
+import { useState, useEffect } from 'react'
+
+function Example() {
+  const [loading, setLoading] = useState(true)
+  const [word, setWord] = useState("")
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`/random-word`)
+      const result = await response.text()
+
+      if (!response.ok) {
+        setError(result)
+        setLoading(false)
+        return
+      }
+
+      setWord(result)
+      setLoading(false)
+    }
+
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return <>Loading...</>
+  }
+
+  if (error) {
+    return <>An error occurred: {error}</>
+  }
+
+  return <>Your word is "{word}"</>
+}
+```
+
+In Svelte, you can use an `{#await}` block to show loading an error states:
+
+```html
+<script>	
+	let promise = fetchData()
+
+  async function fetchData() {
+		const response = await fetch(`/random-word`)
+		const result = await response.text()
+
+    if (!response.ok) {
+      throw new Error(result)
+    }
+
+    return result
+	}
+</script>
+
+{#await promise}
+	Loading...
+{:then word}
+	Your word is "{word}"
+{:catch error}
+	Error: {error.message}
+{/await}
+```
+
+## In closing
+
+I'm really impressed by Svelte's ergonomics. I'm able to achieve the same functionality in less lines of code, and it feels more readable.
+
+If you want to learn more about Svelte, I highly suggest [reading their docs](https://svelte.dev/docs), trying their [interactive tutorial](https://svelte.dev/tutorial/basics), or using [Vite's project generator](https://vitejs.dev/guide/) to create a Svelte app locally:
+
+```zsh
+# for npm 7+
+npm init @vitejs/app my-svelte-app -- --template svelte
+```
